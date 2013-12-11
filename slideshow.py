@@ -27,10 +27,7 @@ def update_zoom(dt):
 def update_image(dt):
     img = random.choice(images)
     sprite.image = img
-    if img.width > img.height:
-        sprite.scale = float(window.width) / img.width
-    else:
-        sprite.scale = float(window.height) / img.height
+    sprite.scale = get_scale(window, img)
     sprite.x = 0
     sprite.y = 0
     window.clear()
@@ -47,7 +44,15 @@ def get_images(input_dir='.'):
     return images
 
 
-window = pyglet.window.Window(fullscreen=True, vsync=True)
+def get_scale(window, image):
+    if image.width > image.height:
+        scale = float(window.width) / image.width
+    else:
+        scale = float(window.height) / image.height
+    return scale
+
+
+window = pyglet.window.Window(fullscreen=True)
 
 
 @window.event
@@ -55,16 +60,14 @@ def on_draw():
     sprite.draw()
 
 
-images = get_images('.')
-img = random.choice(images)
-sprite = pyglet.sprite.Sprite(img)
-if img.width > img.height:
-    sprite.scale = float(window.width) / img.width
-else:
-    sprite.scale = float(window.height) / img.height
+if __name__ == '__main__':
+    images = get_images('.')
+    img = random.choice(images)
+    sprite = pyglet.sprite.Sprite(img)
+    sprite.scale = get_scale(window, img) 
 
-pyglet.clock.schedule_interval(update_image, 5.0)
-pyglet.clock.schedule_interval(update_pan, 1/60.0)
-pyglet.clock.schedule_interval(update_zoom, 1/60.0)
+    pyglet.clock.schedule_interval(update_image, 5.0)
+    pyglet.clock.schedule_interval(update_pan, 1/60.0)
+    pyglet.clock.schedule_interval(update_zoom, 1/60.0)
 
-pyglet.app.run()
+    pyglet.app.run()
