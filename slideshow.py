@@ -36,6 +36,17 @@ def update_image(dt):
     window.clear()
 
 
+def get_images(input_dir='.'):
+    images = []
+    for root, dirs, files in os.walk(input_dir, topdown=True):
+        for file in sorted(files):
+            if file.endswith(('jpg', 'png', 'gif')):
+                path = os.path.abspath(os.path.join(root, file))
+                img = pyglet.image.load(path)
+                images.append(img)
+    return images
+
+
 window = pyglet.window.Window(fullscreen=True, vsync=True)
 
 
@@ -44,13 +55,7 @@ def on_draw():
     sprite.draw()
 
 
-input_dir = '.'
-images = []
-for root, dirs, files in os.walk(input_dir, topdown=True):
-    for file in sorted(files):
-        if file.endswith(('jpg', 'png', 'gif')):
-            path = os.path.abspath(os.path.join(root, file))
-            images.append(pyglet.image.load(path))
+images = get_images('.')
 img = random.choice(images)
 sprite = pyglet.sprite.Sprite(img)
 if img.width > img.height:
