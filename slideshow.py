@@ -35,12 +35,14 @@ def update_image(dt):
     sprite.y = 0
     window.clear()
 
+
 window = pyglet.window.Window(fullscreen=True, vsync=True)
 
 
 @window.event
 def on_draw():
     sprite.draw()
+
 
 input_dir = '.'
 images = []
