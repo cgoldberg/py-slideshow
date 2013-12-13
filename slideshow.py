@@ -15,13 +15,24 @@ import os
 import pyglet
 
 
+
+def update_pan_zoom_speeds():
+    global _pan_speed_x
+    global _pan_speed_y
+    global _zoom_speed
+    _pan_speed_x = random.randint(-20, 20)
+    _pan_speed_y = random.randint(-20, 20)
+    _zoom_speed = random.uniform(-0.08, 0.08)
+    return _pan_speed_x, _pan_speed_y, _zoom_speed
+    
+
 def update_pan(dt):
-    sprite.x += dt * 10
-    sprite.y += dt * 10
+    sprite.x += dt * _pan_speed_x
+    sprite.y += dt * _pan_speed_y
 
 
 def update_zoom(dt):
-    sprite.scale += dt * .025
+    sprite.scale += dt * _zoom_speed
 
 
 def update_image(dt):
@@ -30,6 +41,7 @@ def update_image(dt):
     sprite.scale = get_scale(window, img)
     sprite.x = 0
     sprite.y = 0
+    update_pan_zoom_speeds()
     window.clear()
 
 
@@ -61,12 +73,14 @@ def on_draw():
 
 
 if __name__ == '__main__':
+    _pan_speed_x, _pan_speed_y, _zoom_speed = update_pan_zoom_speeds()
+
     images = get_images('.')
     img = random.choice(images)
     sprite = pyglet.sprite.Sprite(img)
     sprite.scale = get_scale(window, img) 
 
-    pyglet.clock.schedule_interval(update_image, 5.0)
+    pyglet.clock.schedule_interval(update_image, 6.0)
     pyglet.clock.schedule_interval(update_pan, 1/60.0)
     pyglet.clock.schedule_interval(update_zoom, 1/60.0)
 
