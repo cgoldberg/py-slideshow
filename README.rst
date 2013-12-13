@@ -1,15 +1,15 @@
-==============================================================
-py-slideshow - image slideshow in Python with pan/zoom effects
-==============================================================
+==============================
+py-slideshow - image slideshow
+==============================
 
 .. image:: icon.png
 
 * Corey Goldberg, (c) 2013, (http://goldb.org)
 * License: GNU GPLv3
 
-------------------------------------------------
-random image slideshow in Python (pyglet/OpenGL)
-------------------------------------------------
+-------------------------------------------------------------
+random image slideshow in Python with OpenGL pan/zoom effects
+-------------------------------------------------------------
 
 **Requirements**:
 
