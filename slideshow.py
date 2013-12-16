@@ -9,6 +9,7 @@
 #  the Free Software Foundation.
 
 
+import argparse
 import random
 import os
 
@@ -20,9 +21,9 @@ def update_pan_zoom_speeds():
     global _pan_speed_x
     global _pan_speed_y
     global _zoom_speed
-    _pan_speed_x = random.randint(-20, 20)
-    _pan_speed_y = random.randint(-20, 20)
-    _zoom_speed = random.uniform(-0.08, 0.08)
+    _pan_speed_x = random.randint(-8, 8)
+    _pan_speed_y = random.randint(-8, 8)
+    _zoom_speed = random.uniform(-0.02, 0.02)
     return _pan_speed_x, _pan_speed_y, _zoom_speed
     
 
@@ -36,7 +37,7 @@ def update_zoom(dt):
 
 
 def update_image(dt):
-    img = random.choice(images)
+    img = pyglet.image.load(random.choice(image_paths))
     sprite.image = img
     sprite.scale = get_scale(window, img)
     sprite.x = 0
@@ -45,15 +46,14 @@ def update_image(dt):
     window.clear()
 
 
-def get_images(input_dir='.'):
-    images = []
+def get_image_paths(input_dir='.'):
+    paths = []
     for root, dirs, files in os.walk(input_dir, topdown=True):
         for file in sorted(files):
             if file.endswith(('jpg', 'png', 'gif')):
                 path = os.path.abspath(os.path.join(root, file))
-                img = pyglet.image.load(path)
-                images.append(img)
-    return images
+                paths.append(path)
+    return paths
 
 
 def get_scale(window, image):
@@ -75,8 +75,13 @@ def on_draw():
 if __name__ == '__main__':
     _pan_speed_x, _pan_speed_y, _zoom_speed = update_pan_zoom_speeds()
 
-    images = get_images('.')
-    img = random.choice(images)
+    parser = argparse.ArgumentParser()
+    parser.add_argument('dir', help='directory of images',
+                        nargs='?', default=os.getcwd())
+    args = parser.parse_args()
+
+    image_paths = get_image_paths(args.dir)
+    img = pyglet.image.load(random.choice(image_paths))
     sprite = pyglet.sprite.Sprite(img)
     sprite.scale = get_scale(window, img) 
 
