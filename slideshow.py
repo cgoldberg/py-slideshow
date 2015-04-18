@@ -1,12 +1,9 @@
 #!/usr/bin/env python
+
+#  Copyright (c) 2013, 2015, Corey Goldberg
 #
-#  Copyright (c) 2013 Corey Goldberg http://goldb.org/
-#  dev: https://github.com/cgoldberg/py-slideshow
-#
+#  Dev: https://github.com/cgoldberg/py-slideshow
 #  License: GPLv3
-#  This program is free software: you can redistribute it and/or modify
-#  it under the terms of the GNU General Public License as published by
-#  the Free Software Foundation.
 
 
 import argparse
@@ -14,7 +11,6 @@ import random
 import os
 
 import pyglet
-
 
 
 def update_pan_zoom_speeds():
@@ -25,7 +21,7 @@ def update_pan_zoom_speeds():
     _pan_speed_y = random.randint(-8, 8)
     _zoom_speed = random.uniform(-0.02, 0.02)
     return _pan_speed_x, _pan_speed_y, _zoom_speed
-    
+
 
 def update_pan(dt):
     sprite.x += dt * _pan_speed_x
@@ -83,7 +79,7 @@ if __name__ == '__main__':
     image_paths = get_image_paths(args.dir)
     img = pyglet.image.load(random.choice(image_paths))
     sprite = pyglet.sprite.Sprite(img)
-    sprite.scale = get_scale(window, img) 
+    sprite.scale = get_scale(window, img)
 
     pyglet.clock.schedule_interval(update_image, 6.0)
     pyglet.clock.schedule_interval(update_pan, 1/60.0)
