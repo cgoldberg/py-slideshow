@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-
+#
 #  Copyright (c) 2013, 2015, Corey Goldberg
 #
 #  Dev: https://github.com/cgoldberg/py-slideshow
